@@ -5,7 +5,7 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-import { search } from "./api/api";
+import { releasesOne, releases } from "./api/api";
 
 export default {
   name: "App",
@@ -13,8 +13,10 @@ export default {
     HelloWorld,
   },
   async mounted() {
-    const res = await search("nirvana");
+    const res = await releases("Rock", "1983", "Metal", "US");
     console.log(res.data);
+    const resOne = await releasesOne();
+    console.log(resOne);
   },
 };
 </script>
