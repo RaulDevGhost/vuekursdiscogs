@@ -1,7 +1,7 @@
 <template>
   <div>
-    <select @change="updateValue">
-      <option v-for="(item, index) in options" :key="index" :value="modelValue">
+    <select @change="updateValue($event)">
+      <option v-for="(item, index) in options" :key="index" :value="item">
         {{ item }}
       </option>
     </select>
@@ -23,10 +23,10 @@ export default {
     },
   },
   methods: {
-    updateValue(option) {
-      console.log("helllooo", { value: option });
+    updateValue(event) {
+      console.log("helllooo", event.target.value);
       //this.$emit("blur", { value: option, field: this.fieldname, valid: true });
-      //this.$emit("update:modelValue", event.target.value);
+      this.$emit("update:modelValue", event.target.value);
     },
   },
 };

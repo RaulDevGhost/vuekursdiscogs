@@ -5,6 +5,7 @@
     :label="'Type of search'"
     :value="test"
     :options="test"
+    v-model="option"
   ></MyDropDown>
   <MyButton @click="search">SEARCH</MyButton>
 </template>
@@ -25,6 +26,7 @@ export default {
   data() {
     return {
       query: "",
+      option: "",
       test: ["albums", "artists"],
     };
   },
@@ -33,8 +35,9 @@ export default {
       console.log(e);
     },
     async search() {
-      const res = await this.api.search(this.query);
-      console.log(res);
+      console.log(this.option);
+      //   const res = await this.api.search(this.query);
+      //   console.log(res);
     },
   },
 };
