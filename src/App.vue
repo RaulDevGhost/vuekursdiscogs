@@ -1,27 +1,22 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <main>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <div>
+          <component :is="Component" />
+        </div>
+      </transition>
+    </router-view>
+  </main>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-import { releasesOne, releases } from "./api/api";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld,
-  },
-  async mounted() {
-    const res = await releases("Rock", "1983", "Metal", "US");
-    console.log(res.data);
-    const resOne = await releasesOne();
-    console.log(resOne);
-  },
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
