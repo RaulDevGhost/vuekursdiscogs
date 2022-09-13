@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     updateValue(event) {
-      console.log("helllooo", event.target.value);
+      console.log("event target value", event.target.value);
       //this.$emit("blur", { value: option, field: this.fieldname, valid: true });
       this.$emit("update:modelValue", event.target.value);
     },
