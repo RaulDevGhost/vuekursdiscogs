@@ -3,13 +3,14 @@ import axios from "axios";
 const key = process.env.VUE_APP_KEY;
 const host = process.env.VUE_APP_HOST;
 
-const search = async (query) => {
+const search = async (query, option) => {
+  console.log(option);
   const options = {
     method: "GET",
     url: "https://spotify23.p.rapidapi.com/search/",
     params: {
       q: query,
-      type: "multi",
+      type: option,
       offset: "0",
       limit: "10",
       numberOfTopResults: "5",
