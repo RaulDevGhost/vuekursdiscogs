@@ -35,7 +35,6 @@ export default {
       console.log(e);
     },
     async search() {
-      console.log(this.option);
       //   const res = await this.api.search(this.query);
       //   console.log(res);
     },
