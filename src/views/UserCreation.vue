@@ -45,8 +45,8 @@ export default {
 
       if (this.option.length !== 0) {
         console.log("helllo", this.option);
-        const res = await this.api.search(this.query, this.option);
-        console.log(res);
+        // const res = await this.api.search(this.query, this.option);
+        // console.log(res);
       }
     },
   },

@@ -8,6 +8,46 @@ const routes = [
       import(/* webpackChunkName: "home-page" */ "../views/HomePage.vue"),
   },
   {
+    path: "/user-creation-step-one",
+    name: "MyCreationStepOne",
+    component: () =>
+      import(
+        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepOne.vue"
+      ),
+  },
+  {
+    path: "/user-creation-step-two",
+    name: "MyCreationStepTwo",
+    component: () =>
+      import(
+        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepTwo.vue"
+      ),
+  },
+  {
+    path: "/user-creation-step-three",
+    name: "MyCreationStepThree",
+    component: () =>
+      import(
+        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepThree.vue"
+      ),
+  },
+  {
+    path: "/user-creation-step-four",
+    name: "MyCreationStepFour",
+    component: () =>
+      import(
+        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepFour.vue"
+      ),
+  },
+  {
+    path: "/search-results",
+    name: "MySearchResults",
+    component: () =>
+      import(
+        /* webpackChunkName: "user-creation" */ "../views/MySearchResults.vue"
+      ),
+  },
+  {
     path: "/user-creation",
     name: "UserCreation",
     component: () =>

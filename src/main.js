@@ -25,14 +25,20 @@ const store = createStore({
   //   },
   actions: {
     updateMyCreationTypeOne(context, payload) {
-      console.log("helllooo", payload);
+      console.log("step 1", payload);
       context.state.myCreationTypeOne = payload;
     },
-    updateMyCreationTypeTwo(context, payload) {
-      context.state.myCreationTypeTwo = payload;
+    updateMyCreationTypeTwoTitel(context, payload) {
+      console.log("step 2", payload);
+      context.state.myCreationTypeTwoTitel = payload;
     },
-    updateMyCreationFinalProcess(context, payload) {
-      context.state.myCreationFinalProcess.push(payload);
+    updateMyCreationTypeThree(context, payload) {
+      console.log("step 3", payload);
+      context.state.myCreationTypeThree = payload;
+    },
+    updateMySearchResult(context, payload) {
+      console.log("Search Results", payload);
+      context.state.mySearchResults.push(payload);
     },
   },
 });

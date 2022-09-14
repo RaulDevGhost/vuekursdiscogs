@@ -1,8 +1,10 @@
 <template>
   <div>HOME</div>
-  <button>USER CREATION</button>
-  <router-link class="link" title="UserCreation" :to="'/user-creation'"
-    >User Creation</router-link
+  <router-link
+    class="link"
+    title="MyCreationStepOne"
+    :to="'/user-creation-step-one'"
+    >CREATION</router-link
   >
 </template>
 

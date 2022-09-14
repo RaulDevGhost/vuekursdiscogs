@@ -29,15 +29,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .button {
   display: inline-block;
   margin: 0.5em 0;
   padding: 1em 2em;
   background: #fff;
-  border: 2px solid tomato;
+  border: 2px solid $primary;
   border-radius: 3px;
-  color: tomato;
+  color: $primary;
   font-family: "Quicksand", sans-serif;
   font-size: 1em;
   font-weight: 700;
@@ -50,7 +50,7 @@ export default {
 }
 
 .button:hover {
-  background: tomato;
+  background: $primary;
   color: #fff;
 }
 </style>

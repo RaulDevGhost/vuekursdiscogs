@@ -1,7 +1,12 @@
 <template>
   <div class="container">
-    <router-link class="link" title="HomePage" :to="'/'">BACK</router-link>
-    <h1>Step 1</h1>
+    <router-link
+      class="link"
+      title="MyCreationStepOne"
+      :to="'/user-creation-step-one'"
+      >BACK</router-link
+    >
+    <h1>Step 3</h1>
     <MyDropDown
       :label="'Type of search'"
       :value="types"
@@ -13,11 +18,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import MyButton from "../components/MyButton.vue";
 import MyDropDown from "../components/MyDropDown.vue";
 
 export default {
-  name: "MyCreationStepOne",
+  name: "MyCreationStepThree",
   components: {
     MyButton,
     MyDropDown,
@@ -26,14 +32,26 @@ export default {
     return {
       query: "",
       option: "",
-      types: ["select a type", "Top 10", "Recommend stuff"],
+      types: ["select a type", "albums", "artists", "tracks"],
     };
+  },
+  computed: {
+    ...mapState({
+      myCreationTypeOne: (state) => state.myCreationTypeOne,
+      myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
+    }),
   },
   methods: {
     weiter() {
       if (this.option.length !== 0) {
-        this.$store.dispatch("updateMyCreationTypeOne", this.option);
-        this.$router.push({ path: "/user-creation-step-two" });
+        console.log(
+          "helllo",
+          this.myCreationTypeOne,
+          this.myCreationTypeTwoTitel,
+          this.option
+        );
+        this.$store.dispatch("updateMyCreationTypeThree", this.option);
+        this.$router.push({ path: "/user-creation-step-four" });
       }
     },
   },
