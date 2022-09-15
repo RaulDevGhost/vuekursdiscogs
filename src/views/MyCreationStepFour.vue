@@ -3,12 +3,17 @@
     <router-link
       class="link"
       title="MyCreationStepOne"
-      :to="'/user-creation-step-one'"
+      :to="'/user-creation-step-three'"
       >BACK</router-link
     >
     <h1>Step 4</h1>
     <MyInput v-model="query" />
     <MyButton @click="search">Search -></MyButton>
+    <div v-if="notFound">
+      <p class="not-found">
+        Nothing found, please check if the name is right !
+      </p>
+    </div>
   </div>
 </template>
 
@@ -27,6 +32,7 @@ export default {
   data() {
     return {
       query: "",
+      notFound: false,
     };
   },
   computed: {
@@ -34,7 +40,13 @@ export default {
       myCreationTypeOne: (state) => state.myCreationTypeOne,
       myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
       myCreationTypeThree: (state) => state.myCreationTypeThree,
+      mySearchResults: (state) => state.mySearchResults,
     }),
+  },
+  mounted() {
+    if (this.mySearchResults.length > 0) {
+      this.$store.dispatch("updateMySearchResult", "cleanArray");
+    }
   },
   methods: {
     async search() {
@@ -51,14 +63,19 @@ export default {
             this.query,
             this.myCreationTypeThree
           );
-          console.group(res.artists.items);
           res.artists.items.map((item) => {
-            console.log(item.data.profile.name);
-            if (item.data.profile.name === this.query) {
+            //this.$store.dispatch("updateMySearchResult", item);
+            const nameArtist = item.data.profile.name.toLowerCase();
+            const queryArtist = this.query.toLowerCase();
+            if (nameArtist === queryArtist) {
               this.$store.dispatch("updateMySearchResult", item);
               this.$router.push({ path: "/search-results" });
             }
           });
+          if (this.mySearchResults.length === 0) {
+            this.notFound = true;
+            //console.log("Nothing found, please check if the name is right !");
+          }
         } catch (e) {
           console.log(e);
         }
@@ -85,6 +102,10 @@ export default {
 
   a {
     color: $grey;
+  }
+
+  .not-found {
+    color: $primary;
   }
 }
 </style>

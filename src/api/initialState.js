@@ -4,5 +4,6 @@ export const initState = () => {
     myCreationTypeTwoTitel: "",
     myCreationTypeThree: "",
     mySearchResults: [],
+    myList: [],
   };
 };

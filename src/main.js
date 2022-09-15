@@ -38,7 +38,16 @@ const store = createStore({
     },
     updateMySearchResult(context, payload) {
       console.log("Search Results", payload);
-      context.state.mySearchResults.push(payload);
+      //context.state.mySearchResults.push(payload);
+      if (payload === "cleanArray") {
+        context.state.mySearchResults.length = [];
+      } else {
+        context.state.mySearchResults.push(payload);
+      }
+    },
+    updateMyList(context, payload) {
+      console.log("My list", payload);
+      context.state.myList.push(payload);
     },
   },
 });

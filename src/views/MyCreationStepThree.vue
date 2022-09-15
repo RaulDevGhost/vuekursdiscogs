@@ -3,7 +3,7 @@
     <router-link
       class="link"
       title="MyCreationStepOne"
-      :to="'/user-creation-step-one'"
+      :to="'/user-creation-step-two'"
       >BACK</router-link
     >
     <h1>Step 3</h1>
