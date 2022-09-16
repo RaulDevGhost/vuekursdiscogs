@@ -68,6 +68,7 @@ export default {
             const nameArtist = item.data.profile.name.toLowerCase();
             const queryArtist = this.query.toLowerCase();
             if (nameArtist === queryArtist) {
+              console.log("SODA STEREOOOOOO--->", item);
               this.$store.dispatch("updateMySearchResult", item);
               this.$router.push({ path: "/search-results" });
             }

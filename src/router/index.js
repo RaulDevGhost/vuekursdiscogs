@@ -48,6 +48,14 @@ const routes = [
       ),
   },
   {
+    path: "/final-submit",
+    name: "FinalSubmit",
+    component: () =>
+      import(
+        /* webpackChunkName: "user-creation" */ "../views/FinalSubmit.vue"
+      ),
+  },
+  {
     path: "/user-creation",
     name: "UserCreation",
     component: () =>

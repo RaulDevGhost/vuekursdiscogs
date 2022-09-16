@@ -16,8 +16,14 @@
         <MyCardArtist>
           <template v-slot:header>
             <img
+              v-if="item.data.visuals.avatarImage !== null"
               class="artist-image"
               v-bind:src="item.data.visuals.avatarImage.sources[0].url"
+            />
+            <img
+              v-else
+              class="artist-image"
+              src="https://protkd.com/wp-content/uploads/2017/04/default-image.jpg"
             />
           </template>
           <template v-slot:titel>
@@ -39,8 +45,24 @@
     <!--The list is going-->
     <div v-if="myList.length > 0">
       <h1>This is how your list is going</h1>
-      <div v-for="(item, index) in myList" :key="index">
+      <div
+        class="my-list-container"
+        v-for="(item, index) in myList"
+        :key="index"
+      >
+        <h3>{{ item.order }}</h3>
+        <div>-</div>
         <h3>{{ item.name }}</h3>
+      </div>
+    </div>
+    <!--MODAL SUBMIT-->
+    <div v-if="added" class="modal-container">
+      <div class="modal-body">
+        <div class="modal-content">
+          <div>Submit ready</div>
+          <div>{{ message }}</div>
+          <MyButton @click="addAnother()">ADD MORE</MyButton>
+        </div>
       </div>
     </div>
   </div>
@@ -61,6 +83,8 @@ export default {
   data() {
     return {
       query: "",
+      added: false,
+      message: "",
     };
   },
   computed: {
@@ -76,11 +100,30 @@ export default {
     add(item) {
       const artistInfo = {
         id: item.data.uri.slice(15),
+        order: this.myList.length > 0 ? this.myList.at(-1).order + 1 : 1,
         name: item.data.profile.name,
+        image:
+          item.data.visuals.avatarImage !== null
+            ? item.data.visuals.avatarImage.sources[0].url
+            : "https://protkd.com/wp-content/uploads/2017/04/default-image.jpg",
       };
-      console.log("item", artistInfo);
-      this.$store.dispatch("updateMyList", artistInfo);
-      console.log("asi va mi lista----->", this.myList);
+      if (this.myList.length < 5) {
+        if (!this.myList.some((el) => el.name === item.data.profile.name)) {
+          this.$store.dispatch("updateMyList", artistInfo);
+          this.added = true;
+          this.message = `your list has ${this.myList.length} artists`;
+        } else {
+          this.added = true;
+          this.message = "That artist is already in your list";
+        }
+      }
+    },
+    addAnother() {
+      this.added = false;
+      this.$router.push({ path: "/user-creation-step-four" });
+      if (this.myList.length === 5) {
+        this.$router.push({ path: "/final-submit" });
+      }
     },
   },
 };
@@ -116,6 +159,12 @@ export default {
     gap: 20px;
   }
 
+  .my-list-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
   h1,
   h3 {
     text-align: center;
@@ -124,6 +173,36 @@ export default {
 
   a {
     color: $grey;
+  }
+
+  .modal-container {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(185, 197, 191, 0.8);
+    z-index: 9999;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal-body {
+      width: 300px;
+      height: 150px;
+      background-color: #fff;
+      color: black;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .modal-content {
+      margin: 0 10px 0 10px;
+    }
   }
 }
 </style>

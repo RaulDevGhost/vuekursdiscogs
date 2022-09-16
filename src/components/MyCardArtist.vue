@@ -27,6 +27,7 @@ export default {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 20px rgb(0 0 0 / 20%);
+  min-height: 530px;
 }
 
 .artist-name {
@@ -37,7 +38,7 @@ export default {
 
 .artist-image {
   width: 100%;
-  height: 100%;
+  min-height: 500px;
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
