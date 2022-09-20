@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1>FINAL</h1>
+    <p class="drag-order">Drag and order your list</p>
     <div class="container-list">
       <draggable
         :list="myList"
@@ -20,14 +21,14 @@
         </template>
       </draggable>
     </div>
-    <MyButton @click="test()">SUBMIT</MyButton>
+    <MyButton @click="finalOrder()">SUBMIT</MyButton>
     <!--MODAL SUBMIT-->
     <div v-if="deletedItem" class="modal-container">
       <div class="modal-body">
         <div class="modal-content">
           <div>Delete artist?</div>
-          <MyButton @click="addNew">YES</MyButton>
-          <MyButton @click="closeModal">NO</MyButton>
+          <MyButton @click="confirmationDelete(true)">YES</MyButton>
+          <MyButton @click="confirmationDelete(false)">NO</MyButton>
         </div>
       </div>
     </div>
@@ -49,10 +50,10 @@ export default {
   inject: ["api"],
   data() {
     return {
-      newList: [],
       enabled: true,
       dragging: false,
       deletedItem: false,
+      deletedItemId: "",
     };
   },
   computed: {
@@ -67,31 +68,31 @@ export default {
       return this.dragging ? "under drag" : "";
     },
   },
-  mounted() {
-    //this.newList = this.myList;
-  },
-  watch: {
-    myList: function () {
-      if (this.myList.length < 3) {
-        this.deletedItem = true;
-      }
-    },
-  },
+  //   watch: {
+  //     myList: function () {
+  //       if (this.myList.length < 3) {
+  //         this.deletedItem = true;
+  //       }
+  //     },
+  //   },
   methods: {
-    test() {
+    finalOrder() {
       this.myList.map((item, index) => {
         item.order = index + 1;
       });
       console.log("test----->", this.myList);
     },
+    confirmationDelete(answer) {
+      if (answer) {
+        this.$store.dispatch("removeFromMyList", this.deletedItemId);
+        this.$router.push({ path: "/user-creation-step-four" });
+      } else {
+        this.deletedItem = false;
+      }
+    },
     deleteItem(id) {
-      this.$store.dispatch("removeFromMyList", id);
-    },
-    addNew() {
-      this.$router.push({ path: "/user-creation-step-four" });
-    },
-    closeModal() {
-      this.deletedItem = false;
+      this.deletedItemId = id;
+      this.deletedItem = true;
     },
   },
 };
@@ -109,6 +110,11 @@ export default {
   gap: 20px;
   background-color: $black;
   padding-bottom: 10rem;
+
+  .drag-order {
+    color: #ffebcc;
+    opacity: 0.6;
+  }
 
   .buttons {
     margin-top: 35px;
