@@ -11,18 +11,12 @@ const store = createStore({
   state() {
     return initState();
   },
-  //   mutations: {
-  //     updateValid(state, payload) {
-  //       state.isValid = payload;
-  //       updateState(state);
-  //     },
-  //     resetState(state) {
-  //       Object.assign(state, {
-  //         ...initState(),
-  //         dropdownvalues: state.dropdownvalues,
-  //       });
-  //     },
-  //   },
+  mutations: {
+    removeItemFromMyList(state, payload) {
+      console.log("PAYLOAD MUTATION.->", payload);
+      state.myList = state.myList.filter((item) => item.id != payload);
+    },
+  },
   actions: {
     updateMyCreationTypeOne(context, payload) {
       console.log("step 1", payload);
@@ -48,6 +42,10 @@ const store = createStore({
     updateMyList(context, payload) {
       console.log("My list", payload);
       context.state.myList.push(payload);
+    },
+    removeFromMyList(context, payload) {
+      console.log("removing items ---->", payload);
+      context.commit("removeItemFromMyList", payload);
     },
   },
 });

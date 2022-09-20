@@ -38,7 +38,7 @@ export default {
 
 .artist-image {
   width: 100%;
-  min-height: 500px;
+  min-height: 300px;
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

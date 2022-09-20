@@ -65,6 +65,7 @@
         </div>
       </div>
     </div>
+    <!--END MODAL SUBMIT-->
   </div>
 </template>
 
@@ -107,7 +108,7 @@ export default {
             ? item.data.visuals.avatarImage.sources[0].url
             : "https://protkd.com/wp-content/uploads/2017/04/default-image.jpg",
       };
-      if (this.myList.length < 5) {
+      if (this.myList.length < 3) {
         if (!this.myList.some((el) => el.name === item.data.profile.name)) {
           this.$store.dispatch("updateMyList", artistInfo);
           this.added = true;
@@ -121,7 +122,7 @@ export default {
     addAnother() {
       this.added = false;
       this.$router.push({ path: "/user-creation-step-four" });
-      if (this.myList.length === 5) {
+      if (this.myList.length === 3) {
         this.$router.push({ path: "/final-submit" });
       }
     },

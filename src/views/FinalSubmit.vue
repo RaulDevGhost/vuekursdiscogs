@@ -2,18 +2,6 @@
   <div class="container">
     <h1>FINAL</h1>
     <div class="container-list">
-      <!--<div class="card-container" v-for="(item, index) in myList" :key="index">
-        <MyCardArtist>
-          <template v-slot:header>
-            <img class="artist-image" v-bind:src="item.image" />
-          </template>
-          <template v-slot:titel>
-            <div class="artist-name">
-              <h1>{{ item.position }} - {{ item.name }}</h1>
-            </div>
-          </template>
-        </MyCardArtist>
-      </div>-->
       <draggable
         :list="myList"
         :disabled="!enabled"
@@ -23,16 +11,27 @@
         :move="checkMove"
         @start="dragging = true"
         @end="dragging = false"
-        @click="ordering"
       >
         <template #item="{ element }">
           <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-            {{ element.name }}
+            <div class="name-item">{{ element.name }}</div>
+            <div class="delete-item" @click="deleteItem(element.id)">X</div>
           </div>
         </template>
       </draggable>
     </div>
     <MyButton @click="test()">SUBMIT</MyButton>
+    <!--MODAL SUBMIT-->
+    <div v-if="deletedItem" class="modal-container">
+      <div class="modal-body">
+        <div class="modal-content">
+          <div>Delete artist?</div>
+          <MyButton @click="addNew">YES</MyButton>
+          <MyButton @click="closeModal">NO</MyButton>
+        </div>
+      </div>
+    </div>
+    <!--END MODAL SUBMIT-->
   </div>
 </template>
 
@@ -53,6 +52,7 @@ export default {
       newList: [],
       enabled: true,
       dragging: false,
+      deletedItem: false,
     };
   },
   computed: {
@@ -68,11 +68,13 @@ export default {
     },
   },
   mounted() {
-    this.newList = this.myList;
+    //this.newList = this.myList;
   },
   watch: {
-    newList() {
-      console.log("helloooo");
+    myList: function () {
+      if (this.myList.length < 3) {
+        this.deletedItem = true;
+      }
     },
   },
   methods: {
@@ -82,11 +84,14 @@ export default {
       });
       console.log("test----->", this.myList);
     },
-    ordering() {
-      this.myList.map((item, index) => {
-        item.order = index + 1;
-      });
-      console.log("test----->", this.myList);
+    deleteItem(id) {
+      this.$store.dispatch("removeFromMyList", id);
+    },
+    addNew() {
+      this.$router.push({ path: "/user-creation-step-four" });
+    },
+    closeModal() {
+      this.deletedItem = false;
     },
   },
 };
@@ -125,10 +130,31 @@ export default {
   }
 
   .list-group-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 300px;
-    color: blanchedalmond;
-    border: 1px blanchedalmond solid;
+    color: #ffebcc;
+    border: 1px #ffebcc solid;
+    padding: 1rem 0 1rem 0;
+    margin: 1rem;
     cursor: grab;
+
+    .name-item {
+      width: 90%;
+      height: 100%;
+      padding: 0 1rem;
+    }
+
+    .delete-item {
+      display: flex;
+      align-self: center;
+      height: 100%;
+      width: 10%;
+      border-left: 1px #ffebcc solid;
+      justify-content: center;
+      cursor: pointer;
+    }
   }
 
   .card-container {
@@ -162,6 +188,36 @@ export default {
 
   a {
     color: $grey;
+  }
+
+  .modal-container {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(185, 197, 191, 0.8);
+    z-index: 9999;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal-body {
+      width: 300px;
+      height: 150px;
+      background-color: #fff;
+      color: black;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .modal-content {
+      margin: 0 10px 0 10px;
+    }
   }
 }
 </style>
