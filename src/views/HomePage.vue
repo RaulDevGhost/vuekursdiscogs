@@ -1,11 +1,11 @@
 <template>
-  <div>HOME</div>
-  <router-link
-    class="link"
-    title="MyCreationStepOne"
-    :to="'/user-creation-step-one'"
-    >CREATION</router-link
-  >
+  <div class="home-container">
+    <div>HOME</div>
+    <router-link title="MyCreationStepOne" :to="'/user-creation-step-one'"
+      >CREATION</router-link
+    >
+    <router-link title="KontakForm" :to="'/kontak'">KONTAK FORM</router-link>
+  </div>
 </template>
 
 <script>
@@ -18,4 +18,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.home-container {
+  display: flex;
+  flex-direction: column;
+}
+</style>

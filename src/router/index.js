@@ -56,13 +56,18 @@ const routes = [
       ),
   },
   {
-    path: "/user-creation",
-    name: "UserCreation",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/UserCreation.vue"
-      ),
+    path: "/kontak",
+    name: "KontakForm",
+    component: () => import("../views/KontakForm.vue"),
   },
+  // {
+  //   path: "/user-creation",
+  //   name: "UserCreation",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "user-creation" */ "../views/UserCreation.vue"
+  //     ),
+  // },
 ];
 
 const indexRoute = createRouter({
