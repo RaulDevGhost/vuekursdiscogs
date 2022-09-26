@@ -1,8 +1,10 @@
 <template>
   <div class="checkboxes-container">
-    <div v-for="(item, index) in options" :key="index">
+    <div v-for="(item, index) in options" :key="index" id="checklist">
       <input
         type="checkbox"
+        class="checkbox-input"
+        ref="checkboxRef"
         :id="item"
         :name="item"
         :value="item"
@@ -22,6 +24,10 @@ export default {
       type: String,
       default: "",
     },
+    clean: {
+      type: Boolean,
+      require: false,
+    },
   },
   data() {
     return {
@@ -32,6 +38,14 @@ export default {
     interest() {
       this.$emit("update:modelValue", this.interest);
     },
+    clean() {
+      if (this.clean) {
+        this.$refs.checkboxRef.map((item) => {
+          item.checked = false;
+          this.interest = [];
+        });
+      }
+    },
   },
 };
 </script>
@@ -39,6 +53,218 @@ export default {
 <style scoped lang="scss">
 .checkboxes-container {
   display: flex;
-  justify-content: left;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  & > * {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 50px;
+  }
+}
+
+#checklist {
+  --background: #ffffff;
+  --text: #414856;
+  --check: #000000;
+  --disabled: #c3c8de;
+  --width: 100px;
+  --height: 140px;
+  --border-radius: 10px;
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px auto;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  label {
+    color: var(--text);
+    position: relative;
+    cursor: pointer;
+    display: grid;
+    align-items: center;
+    width: fit-content;
+    transition: color 0.3s ease;
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+    }
+    &::before {
+      height: 2px;
+      width: 8px;
+      left: -27px;
+      background: var(--check);
+      border-radius: 2px;
+      transition: background 0.3s ease;
+    }
+    &:after {
+      height: 4px;
+      width: 4px;
+      top: 8px;
+      left: -25px;
+      border-radius: 50%;
+    }
+  }
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    height: 15px;
+    width: 15px;
+    outline: none;
+    border: 0;
+    margin: 0 15px 0 0;
+    cursor: pointer;
+    background: var(--background);
+    display: grid;
+    align-items: center;
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      height: 2px;
+      top: auto;
+      background: var(--check);
+      border-radius: 2px;
+    }
+    &::before {
+      width: 0px;
+      right: 60%;
+      transform-origin: right bottom;
+    }
+    &::after {
+      width: 0px;
+      left: 40%;
+      transform-origin: left bottom;
+    }
+    &:checked {
+      &::before {
+        animation: check-01 0.4s ease forwards;
+      }
+      &::after {
+        animation: check-02 0.4s ease forwards;
+      }
+      + label {
+        color: var(--disabled);
+        animation: move 0.3s ease 0.1s forwards;
+        &::before {
+          background: var(--disabled);
+          animation: slice 0.4s ease forwards;
+        }
+        &::after {
+          animation: firework 0.5s ease forwards 0.1s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes move {
+  50% {
+    padding-left: 8px;
+    padding-right: 0px;
+  }
+  100% {
+    padding-right: 4px;
+  }
+}
+@keyframes slice {
+  60% {
+    width: 100%;
+    left: 4px;
+  }
+  100% {
+    width: 100%;
+    left: -2px;
+    padding-left: 0;
+  }
+}
+@keyframes check-01 {
+  0% {
+    width: 4px;
+    top: auto;
+    transform: rotate(0);
+  }
+  50% {
+    width: 0px;
+    top: auto;
+    transform: rotate(0);
+  }
+  51% {
+    width: 0px;
+    top: 8px;
+    transform: rotate(45deg);
+  }
+  100% {
+    width: 5px;
+    top: 8px;
+    transform: rotate(45deg);
+  }
+}
+@keyframes check-02 {
+  0% {
+    width: 4px;
+    top: auto;
+    transform: rotate(0);
+  }
+  50% {
+    width: 0px;
+    top: auto;
+    transform: rotate(0);
+  }
+  51% {
+    width: 0px;
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+  100% {
+    width: 10px;
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+}
+@keyframes firework {
+  0% {
+    opacity: 1;
+    box-shadow: 0 0 0 -2px $primary, 0 0 0 -2px $primary, 0 0 0 -2px $primary,
+      0 0 0 -2px $primary, 0 0 0 -2px $primary, 0 0 0 -2px $primary;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 -15px 0 0px $primary, 14px -8px 0 0px $primary,
+      14px 8px 0 0px $primary, 0 15px 0 0px $primary, -14px 8px 0 0px $primary,
+      -14px -8px 0 0px $primary;
+  }
+}
+
+//--- ## BASIC #############
+body {
+  background: #e8ebf3;
+  height: 100vh;
+  font: 400 16px "Varela Round", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .socials {
+    position: fixed;
+    display: block;
+    left: 20px;
+    bottom: 20px;
+    > a {
+      display: block;
+      width: 30px;
+      opacity: 0.2;
+      transform: scale(var(--scale, 0.8));
+      transition: transform 0.3s cubic-bezier(0.38, -0.12, 0.24, 1.91);
+      &:hover {
+        --scale: 1;
+      }
+    }
+  }
 }
 </style>
