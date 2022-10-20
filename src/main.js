@@ -4,8 +4,10 @@ import apiServiceSpotify from "@/api/api";
 import indexRoute from "./router";
 import { createStore } from "vuex";
 import { initState } from "./api/initialState";
+import { createPinia } from "pinia";
 
 const app = createApp(App);
+const pinia = createPinia();
 
 const store = createStore({
   state() {
@@ -52,5 +54,6 @@ const store = createStore({
 
 app.provide("api", apiServiceSpotify);
 app.use(indexRoute);
+app.use(pinia);
 app.use(store);
 app.mount("#app");

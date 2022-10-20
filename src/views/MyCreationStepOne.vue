@@ -8,6 +8,9 @@
       :options="types"
       v-model="option"
     ></MyDropDown>
+    <h1>{{ this.store.count }}</h1>
+    <h1>{{ this.store.getUserById(this.store.count) }}</h1>
+    <button @click="this.myOwnName('kslksks')">+</button>
     <MyButton @click="weiter">NEXT -></MyButton>
   </div>
 </template>
@@ -15,6 +18,8 @@
 <script>
 import MyButton from "../components/MyButton.vue";
 import MyDropDown from "../components/MyDropDown.vue";
+import { useCounterStore } from "../store";
+import { mapActions } from "pinia";
 
 export default {
   name: "MyCreationStepOne",
@@ -27,9 +32,16 @@ export default {
       query: "",
       option: "",
       types: ["select a type", "Top 10", "Recommend stuff"],
+      store: useCounterStore(),
     };
   },
   methods: {
+    ...mapActions(useCounterStore, { myOwnName: "increment" }),
+    // incrementation() {
+    //   const testing = "heyyyy";
+    //   //this.store.increment(testing);
+    //   //this.myOwnName(testing);
+    // },
     weiter() {
       if (this.option.length !== 0) {
         this.$store.dispatch("updateMyCreationTypeOne", this.option);
