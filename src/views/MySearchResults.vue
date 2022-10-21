@@ -10,7 +10,7 @@
     <div class="container-list">
       <div
         class="card-container"
-        v-for="(item, index) in mySearchResults"
+        v-for="(item, index) in this.store.mySearchResults"
         :key="index"
       >
         <MyCardArtist>
@@ -43,11 +43,11 @@
       </div>
     </div>
     <!--The list is going-->
-    <div v-if="myList.length > 0">
+    <div v-if="this.store.myList.length > 0">
       <h1>This is how your list is going</h1>
       <div
         class="my-list-container"
-        v-for="(item, index) in myList"
+        v-for="(item, index) in this.store.myList"
         :key="index"
       >
         <h3>{{ item.order }}</h3>
@@ -70,9 +70,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+//import { mapState } from "vuex";
 import MyCardArtist from "../components/MyCardArtist.vue";
 import MyButton from "../components/MyButton.vue";
+import { useCounterStore } from "../store";
 
 export default {
   name: "MySearchResults",
@@ -86,33 +87,39 @@ export default {
       query: "",
       added: false,
       message: "",
+      store: useCounterStore(),
     };
   },
-  computed: {
-    ...mapState({
-      myCreationTypeOne: (state) => state.myCreationTypeOne,
-      myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
-      myCreationTypeThree: (state) => state.myCreationTypeThree,
-      mySearchResults: (state) => state.mySearchResults,
-      myList: (state) => state.myList,
-    }),
-  },
+  // computed: {
+  //   ...mapState({
+  //     myCreationTypeOne: (state) => state.myCreationTypeOne,
+  //     myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
+  //     myCreationTypeThree: (state) => state.myCreationTypeThree,
+  //     mySearchResults: (state) => state.mySearchResults,
+  //     myList: (state) => state.myList,
+  //   }),
+  // },
   methods: {
     add(item) {
       const artistInfo = {
         id: item.data.uri.slice(15),
-        order: this.myList.length > 0 ? this.myList.at(-1).order + 1 : 1,
+        order:
+          this.store.myList.length > 0 ? this.store.myList.at(-1).order + 1 : 1,
         name: item.data.profile.name,
         image:
           item.data.visuals.avatarImage !== null
             ? item.data.visuals.avatarImage.sources[0].url
             : "https://protkd.com/wp-content/uploads/2017/04/default-image.jpg",
       };
-      if (this.myList.length < 3) {
-        if (!this.myList.some((el) => el.name === item.data.profile.name)) {
-          this.$store.dispatch("updateMyList", artistInfo);
+      if (this.store.myList.length < 3) {
+        if (
+          !this.store.myList.some((el) => el.name === item.data.profile.name)
+        ) {
+          //this.$store.dispatch("updateMyList", artistInfo);
+          console.log("ADDING ARTIST---->", artistInfo);
+          this.store.updateMyList(artistInfo);
           this.added = true;
-          this.message = `your list has ${this.myList.length} artists`;
+          this.message = `your list has ${this.store.myList.length} artists`;
         } else {
           this.added = true;
           this.message = "That artist is already in your list";
@@ -122,7 +129,7 @@ export default {
     addAnother() {
       this.added = false;
       this.$router.push({ path: "/user-creation-step-four" });
-      if (this.myList.length === 3) {
+      if (this.store.myList.length === 3) {
         this.$router.push({ path: "/final-submit" });
       }
     },

@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput.vue";
+import { useCounterStore } from "../store";
 
 export default {
   name: "MyCreationStepFour",
@@ -33,31 +33,28 @@ export default {
     return {
       query: "",
       notFound: false,
+      store: useCounterStore(),
     };
   },
-  computed: {
-    ...mapState({
-      myCreationTypeOne: (state) => state.myCreationTypeOne,
-      myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
-      myCreationTypeThree: (state) => state.myCreationTypeThree,
-      mySearchResults: (state) => state.mySearchResults,
-    }),
-  },
+  // computed: {
+  //   ...mapState({
+  //     myCreationTypeOne: (state) => state.myCreationTypeOne,
+  //     myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
+  //     myCreationTypeThree: (state) => state.myCreationTypeThree,
+  //     mySearchResults: (state) => state.mySearchResults,
+  //   }),
+  // },
   mounted() {
-    if (this.mySearchResults.length > 0) {
-      this.$store.dispatch("updateMySearchResult", "cleanArray");
+    if (this.store.mySearchResults.length > 0) {
+      this.store.updateMySearchResult("updateMySearchResult", "cleanArray");
+    }
+    if (this.store.myCreationTypeThree === "") {
+      this.$router.push({ path: "/user-creation-step-three" });
     }
   },
   methods: {
     async search() {
       if (this.query.length !== 0) {
-        console.log(
-          "helllo",
-          this.query,
-          this.myCreationTypeOne,
-          this.myCreationTypeTwoTitel,
-          this.myCreationTypeThree
-        );
         try {
           const res = await this.api.search(
             this.query,
@@ -69,7 +66,8 @@ export default {
             const queryArtist = this.query.toLowerCase();
             if (nameArtist === queryArtist) {
               console.log("SODA STEREOOOOOO--->", item);
-              this.$store.dispatch("updateMySearchResult", item);
+              this.store.updateMySearchResult(item);
+              //this.$store.dispatch("updateMySearchResult", item);
               this.$router.push({ path: "/search-results" });
             }
           });

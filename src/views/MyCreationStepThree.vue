@@ -12,15 +12,16 @@
       :value="types"
       :options="types"
       v-model="option"
+      @change="this.store.updateMyCreationTypeThree(option)"
     ></MyDropDown>
     <MyButton @click="weiter">NEXT -></MyButton>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
 import MyButton from "../components/MyButton.vue";
 import MyDropDown from "../components/MyDropDown.vue";
+import { useCounterStore } from "../store";
 
 export default {
   name: "MyCreationStepThree",
@@ -33,24 +34,24 @@ export default {
       query: "",
       option: "",
       types: ["select a type", "albums", "artists", "tracks"],
+      store: useCounterStore(),
     };
   },
-  computed: {
-    ...mapState({
-      myCreationTypeOne: (state) => state.myCreationTypeOne,
-      myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
-    }),
+  mounted() {
+    if (this.store.myCreationTypeTwoTitel === "") {
+      this.$router.push({ path: "/user-creation-step-one" });
+    }
   },
+  // computed: {
+  //   ...mapState({
+  //     myCreationTypeOne: (state) => state.myCreationTypeOne,
+  //     myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
+  //   }),
+  // },
   methods: {
     weiter() {
       if (this.option.length !== 0) {
-        console.log(
-          "helllo",
-          this.myCreationTypeOne,
-          this.myCreationTypeTwoTitel,
-          this.option
-        );
-        this.$store.dispatch("updateMyCreationTypeThree", this.option);
+        //this.$store.dispatch("updateMyCreationTypeThree", this.option);
         this.$router.push({ path: "/user-creation-step-four" });
       }
     },

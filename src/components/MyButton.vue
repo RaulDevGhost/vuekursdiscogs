@@ -34,8 +34,8 @@ export default {
   display: inline-block;
   margin: 0.5em 0;
   padding: 1em 2em;
-  background: #fff;
-  border: 2px solid $primary;
+  background: transparent;
+  border: 1px solid $primary;
   border-radius: 3px;
   color: $primary;
   font-family: "Quicksand", sans-serif;

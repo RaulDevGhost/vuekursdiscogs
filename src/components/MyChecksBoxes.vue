@@ -107,8 +107,6 @@ export default {
     }
   }
   input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     position: relative;
     height: 15px;
     width: 15px;
