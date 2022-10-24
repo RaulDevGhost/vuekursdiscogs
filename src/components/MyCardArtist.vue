@@ -28,6 +28,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 2px 20px rgb(0 0 0 / 20%);
   min-height: 530px;
+  height: 100%;
 }
 
 .artist-name {

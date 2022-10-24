@@ -22,16 +22,18 @@ export const useCounterStore = defineStore("counter", {
       this.myCreationTypeThree = payload;
     },
     updateMySearchResult(payload) {
-      console.log("Search Results", payload);
       if (payload === "cleanArray") {
+        console.log("cleaning");
         this.mySearchResults.length = [];
       } else {
+        console.log("pushing my search list", payload);
         this.mySearchResults.push(payload);
+        console.log("My search Results list", this.mySearchResults);
       }
     },
     updateMyList(payload) {
-      console.log("My list", payload);
       this.myList.push(payload);
+      console.log("HEY MY LIST", this.myList);
     },
     removeFromMyList(payload) {
       console.log("removing items ---->", payload);

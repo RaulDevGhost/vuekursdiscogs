@@ -46,8 +46,12 @@ export default {
   // },
   mounted() {
     if (this.store.mySearchResults.length > 0) {
-      this.store.updateMySearchResult("updateMySearchResult", "cleanArray");
+      this.store.updateMySearchResult("cleanArray");
     }
+    console.log(
+      "hey fucker this is my serach RESULTS LIST",
+      this.store.mySearchResults
+    );
     if (this.store.myCreationTypeThree === "") {
       this.$router.push({ path: "/user-creation-step-three" });
     }
@@ -65,13 +69,12 @@ export default {
             const nameArtist = item.data.profile.name.toLowerCase();
             const queryArtist = this.query.toLowerCase();
             if (nameArtist === queryArtist) {
-              console.log("SODA STEREOOOOOO--->", item);
               this.store.updateMySearchResult(item);
               //this.$store.dispatch("updateMySearchResult", item);
               this.$router.push({ path: "/search-results" });
             }
           });
-          if (this.mySearchResults.length === 0) {
+          if (this.store.mySearchResults.length === 0) {
             this.notFound = true;
             //console.log("Nothing found, please check if the name is right !");
           }

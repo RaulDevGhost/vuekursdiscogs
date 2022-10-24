@@ -16,7 +16,7 @@
         <MyCardArtist>
           <template v-slot:header>
             <img
-              v-if="item.data.visuals.avatarImage !== null"
+              v-if="item.data.visuals.avatarImage.sources[0].url !== null"
               class="artist-image"
               v-bind:src="item.data.visuals.avatarImage.sources[0].url"
             />
@@ -107,7 +107,7 @@ export default {
           this.store.myList.length > 0 ? this.store.myList.at(-1).order + 1 : 1,
         name: item.data.profile.name,
         image:
-          item.data.visuals.avatarImage !== null
+          item.data.visuals.avatarImage.sources[0].url !== null
             ? item.data.visuals.avatarImage.sources[0].url
             : "https://protkd.com/wp-content/uploads/2017/04/default-image.jpg",
       };
@@ -116,7 +116,6 @@ export default {
           !this.store.myList.some((el) => el.name === item.data.profile.name)
         ) {
           //this.$store.dispatch("updateMyList", artistInfo);
-          console.log("ADDING ARTIST---->", artistInfo);
           this.store.updateMyList(artistInfo);
           this.added = true;
           this.message = `your list has ${this.store.myList.length} artists`;

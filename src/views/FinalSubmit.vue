@@ -4,7 +4,7 @@
     <p class="drag-order">Drag and order your list</p>
     <div class="container-list">
       <draggable
-        :list="myList"
+        :list="this.store.myList"
         :disabled="!enabled"
         item-key="name"
         class="list-group"
@@ -38,8 +38,8 @@
 
 <script>
 import draggable from "vuedraggable";
-import { mapState } from "vuex";
 import MyButton from "../components/MyButton.vue";
+import { useCounterStore } from "../store";
 
 export default {
   name: "FinalSubmit",
@@ -54,37 +54,31 @@ export default {
       dragging: false,
       deletedItem: false,
       deletedItemId: "",
+      store: useCounterStore(),
     };
   },
   computed: {
-    ...mapState({
-      myCreationTypeOne: (state) => state.myCreationTypeOne,
-      myCreationTypeTwoTitel: (state) => state.myCreationTypeTwoTitel,
-      myCreationTypeThree: (state) => state.myCreationTypeThree,
-      mySearchResults: (state) => state.mySearchResults,
-      myList: (state) => state.myList,
-    }),
     draggingInfo() {
       return this.dragging ? "under drag" : "";
     },
   },
   //   watch: {
   //     myList: function () {
-  //       if (this.myList.length < 3) {
+  //       if (this.store.myList.length < 3) {
   //         this.deletedItem = true;
   //       }
   //     },
   //   },
   methods: {
     finalOrder() {
-      this.myList.map((item, index) => {
+      this.store.myList.map((item, index) => {
         item.order = index + 1;
       });
-      console.log("test----->", this.myList);
+      console.log("test----->", this.store.myList);
     },
     confirmationDelete(answer) {
       if (answer) {
-        this.$store.dispatch("removeFromMyList", this.deletedItemId);
+        this.store.removeFromMyList(this.deletedItemId);
         this.$router.push({ path: "/user-creation-step-four" });
       } else {
         this.deletedItem = false;
