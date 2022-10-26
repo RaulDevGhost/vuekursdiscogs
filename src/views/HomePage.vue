@@ -11,10 +11,6 @@
 <script>
 export default {
   name: "HomePage",
-  mounted() {
-    console.log("heyyy");
-    this.$store.dispatch("updateMyCreationTypeOne", "Top 10");
-  },
 };
 </script>
 

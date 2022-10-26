@@ -4,56 +4,37 @@ const routes = [
   {
     path: "/",
     name: "HomePage",
-    component: () =>
-      import(/* webpackChunkName: "home-page" */ "../views/HomePage.vue"),
+    component: () => import("../views/HomePage.vue"),
   },
   {
     path: "/user-creation-step-one",
     name: "MyCreationStepOne",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepOne.vue"
-      ),
+    component: () => import("../views/MyCreationStepOne.vue"),
   },
   {
     path: "/user-creation-step-two",
     name: "MyCreationStepTwo",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepTwo.vue"
-      ),
+    component: () => import("../views/MyCreationStepTwo.vue"),
   },
   {
     path: "/user-creation-step-three",
     name: "MyCreationStepThree",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepThree.vue"
-      ),
+    component: () => import("../views/MyCreationStepThree.vue"),
   },
   {
     path: "/user-creation-step-four",
     name: "MyCreationStepFour",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/MyCreationStepFour.vue"
-      ),
+    component: () => import("../views/MyCreationStepFour.vue"),
   },
   {
     path: "/search-results",
     name: "MySearchResults",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/MySearchResults.vue"
-      ),
+    component: () => import("../views/MySearchResults.vue"),
   },
   {
     path: "/final-submit",
     name: "FinalSubmit",
-    component: () =>
-      import(
-        /* webpackChunkName: "user-creation" */ "../views/FinalSubmit.vue"
-      ),
+    component: () => import("../views/FinalSubmit.vue"),
   },
   {
     path: "/kontak",
@@ -65,7 +46,7 @@ const routes = [
   //   name: "UserCreation",
   //   component: () =>
   //     import(
-  //       /* webpackChunkName: "user-creation" */ "../views/UserCreation.vue"
+  //        "../views/UserCreation.vue"
   //     ),
   // },
 ];

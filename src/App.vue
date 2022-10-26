@@ -10,7 +10,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "App",
 };
@@ -23,7 +23,6 @@ export default {
 *::after {
   box-sizing: border-box;
 }
-
 /* Remove default margin */
 body,
 h1,
@@ -37,7 +36,6 @@ dl,
 dd {
   margin: 0;
 }
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -45,12 +43,10 @@ dd {
   text-align: center;
   color: #2c3e50;
 }
-
 .wrapper {
   width: 100%;
   min-height: 100vh;
 }
-
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.3s ease-out;
